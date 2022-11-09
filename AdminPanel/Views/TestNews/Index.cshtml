@@ -1,0 +1,12 @@
+﻿@model ICollection<News>
+
+    @foreach(var i in Model){
+        <p>@i.Name</p>
+
+            @foreach(var p in i.Pictures){
+                <p>@p.Name</p>
+                <p>@p.Path</p>
+@*                преобразование прямого пути в относительное
+*@                <img src="@Url.Content(@p.Path)" width="200px">
+            }
+    }

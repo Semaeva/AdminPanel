@@ -1,0 +1,19 @@
+﻿@model List<News>
+<h2>all news</h2>
+<table>
+    <tr>
+        <th>news name</th> 
+        <th>picture</th>
+    </tr>
+    @foreach(var news in Model){
+        <tr>
+            <td>@news.Name</td>
+                <td>@news.Description</td>
+                @foreach(var pic in news.Pictures){
+              <td>@pic.Name</td>
+                          <td><img rec="@pic.Path"></td>
+                }
+        </tr>
+    }
+
+</table>
