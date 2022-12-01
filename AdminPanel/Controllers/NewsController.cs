@@ -15,7 +15,7 @@ namespace AdminPanel.Controllers
             _context = context;
             _environment = environment;   
         }   
-
+        //test
         public async Task<IActionResult>Index()
         {
             var newsList = await _context.News.Include(p => p.Pictures).ToListAsync();
