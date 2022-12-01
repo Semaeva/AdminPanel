@@ -90,6 +90,5 @@ namespace AdminPanel.Controllers
             }    
             return RedirectToAction("Index");
         }
-
     }
 }

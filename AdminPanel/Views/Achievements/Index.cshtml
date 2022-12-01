@@ -1,0 +1,10 @@
+﻿@model ICollection<Achievements>
+
+    @foreach(var ach in Model){
+        <p>@ach.Name</p>
+        <p>
+            <form asp-action="Delete" asp-controller="Achievements" asp-route-id="@ach.Id">
+                <button type="submit"> Удлаить</button>
+            </form>
+        </p>
+    }
