@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221109165610_CreatedAchievementsTable")]
+    partial class CreatedAchievementsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +67,7 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("NewsId")
+                    b.Property<int>("NewsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Path")
@@ -299,23 +301,21 @@ namespace AdminPanel.Migrations
 
             modelBuilder.Entity("AdminPanel.Models.Pictures", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Achievements", "Achievements")
+                    b.HasOne("AdminPanel.Models.Achievements", null)
                         .WithMany("Pictures")
                         .HasForeignKey("AchievementsId");
 
                     b.HasOne("AdminPanel.Models.News", "News")
                         .WithMany("Pictures")
-                        .HasForeignKey("NewsId");
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("AdminPanel.Models.Teachers", "Teachers")
+                    b.HasOne("AdminPanel.Models.Teachers", null)
                         .WithMany("Pictures")
                         .HasForeignKey("TeachersId");
 
-                    b.Navigation("Achievements");
-
                     b.Navigation("News");
-
-                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
