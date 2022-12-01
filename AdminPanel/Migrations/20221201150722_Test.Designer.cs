@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221103052130_Added")]
-    partial class Added
+    [Migration("20221201150722_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,25 +20,6 @@ namespace AdminPanel.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("AdminPanel.Models.FileModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Files");
-                });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
@@ -72,11 +53,33 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("TeachersId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NewsId");
 
+                    b.HasIndex("TeachersId");
+
                     b.ToTable("Pictures");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.User", b =>
@@ -282,6 +285,10 @@ namespace AdminPanel.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AdminPanel.Models.Teachers", null)
+                        .WithMany("Pictures")
+                        .HasForeignKey("TeachersId");
+
                     b.Navigation("News");
                 });
 
@@ -337,6 +344,11 @@ namespace AdminPanel.Migrations
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
+                {
+                    b.Navigation("Pictures");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
                 {
                     b.Navigation("Pictures");
                 });
