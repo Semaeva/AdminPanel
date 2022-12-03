@@ -18,7 +18,7 @@ namespace AdminPanel.Controllers
         //test
         public async Task<IActionResult>Index()
         {
-            var newsList = await _context.News.Include(p => p.Pictures).ToListAsync();
+            var newsList = await _context.News.Include(p => p.NewsPictures).ToListAsync();
             return View(newsList);
         }
 

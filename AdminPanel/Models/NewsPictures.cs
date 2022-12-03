@@ -8,7 +8,6 @@ namespace AdminPanel.Models
         public string? Name { get; set; }
         public int NewsId { get; set; } //foreign key
         public News? News { get; set; }//навигационное поле
-
      
         public string? Path { get; set; }
     }
