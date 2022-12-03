@@ -5,12 +5,12 @@
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public string? MainPicturesPath { get; set; }
+        public ICollection<NewsPictures> Pictures { get; set; }//обратная связь однин-ко-многим
 
-        public ICollection<Pictures> Pictures { get; set; }//обратная связь однин-ко-многим
-        //test
         public News()
         {
-            Pictures = new List<Pictures>();
+            Pictures = new List<NewsPictures>();
         }
 
     }
