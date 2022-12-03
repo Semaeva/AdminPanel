@@ -16,7 +16,9 @@ namespace AdminPanel.Controllers
         {
             return View();
         }
-        
+
+
+        //установка главнойr
         public async Task<IActionResult> SetMainPicture(int id, string path)
         {
             var result = context.Achievements.SingleOrDefault((p => p.Id == id));
@@ -26,7 +28,7 @@ namespace AdminPanel.Controllers
                 await context.SaveChangesAsync();
             }
             return RedirectToAction("Index");
-
+            //t
         }
     }
 }
