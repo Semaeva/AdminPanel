@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221203090219_Updates")]
-    partial class Updates
+    [Migration("20221203113102_UpdatesNewsPictures")]
+    partial class UpdatesNewsPictures
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,12 +30,37 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("MainPicturePath")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Achievements");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.AchievementsPictures", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AchievementsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AchievementsId");
+
+                    b.ToTable("AchievementsPictures");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
@@ -47,7 +72,7 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("MainPicturesPath")
+                    b.Property<string>("MainPicturePath")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -64,13 +89,10 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("AchievementsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("NewsId")
+                    b.Property<int>("NewsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Path")
@@ -81,13 +103,11 @@ namespace AdminPanel.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AchievementsId");
-
                     b.HasIndex("NewsId");
 
                     b.HasIndex("TeachersId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("NewsPictures");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
@@ -302,15 +322,24 @@ namespace AdminPanel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AdminPanel.Models.AchievementsPictures", b =>
+                {
+                    b.HasOne("AdminPanel.Models.Achievements", "Achievements")
+                        .WithMany("AchievementsPictures")
+                        .HasForeignKey("AchievementsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Achievements");
+                });
+
             modelBuilder.Entity("AdminPanel.Models.NewsPictures", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Achievements", null)
-                        .WithMany("Pictures")
-                        .HasForeignKey("AchievementsId");
-
                     b.HasOne("AdminPanel.Models.News", "News")
-                        .WithMany("Pictures")
-                        .HasForeignKey("NewsId");
+                        .WithMany("NewsPictures")
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AdminPanel.Models.Teachers", null)
                         .WithMany("Pictures")
@@ -372,12 +401,12 @@ namespace AdminPanel.Migrations
 
             modelBuilder.Entity("AdminPanel.Models.Achievements", b =>
                 {
-                    b.Navigation("Pictures");
+                    b.Navigation("AchievementsPictures");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
-                    b.Navigation("Pictures");
+                    b.Navigation("NewsPictures");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
