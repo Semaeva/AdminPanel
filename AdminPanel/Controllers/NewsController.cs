@@ -15,10 +15,10 @@ namespace AdminPanel.Controllers
             _context = context;
             _environment = environment;   
         }   
-
+        //test
         public async Task<IActionResult>Index()
         {
-            var newsList = await _context.News.Include(p => p.Pictures).ToListAsync();
+            var newsList = await _context.News.Include(p => p.NewsPictures).ToListAsync();
             return View(newsList);
         }
 
@@ -43,7 +43,7 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    Pictures pic = new Pictures() { Name = uploadedFile.FileName, Path = path, News = news };
+                    NewsPictures pic = new NewsPictures() { Name = uploadedFile.FileName, Path = path, News = news };
                     await _context.Pictures.AddAsync(pic);
                     await _context.SaveChangesAsync();
                 }
