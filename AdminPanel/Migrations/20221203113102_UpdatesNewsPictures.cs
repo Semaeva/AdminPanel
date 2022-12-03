@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AdminPanel.Migrations
 {
-    public partial class Updates : Migration
+    public partial class UpdatesNewsPictures : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,6 +22,8 @@ namespace AdminPanel.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MainPicturePath = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -95,7 +97,7 @@ namespace AdminPanel.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MainPicturesPath = table.Column<string>(type: "longtext", nullable: true)
+                    MainPicturePath = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -118,6 +120,30 @@ namespace AdminPanel.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teachers", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AchievementsPictures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Path = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AchievementsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AchievementsPictures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AchievementsPictures_Achievements_AchievementsId",
+                        column: x => x.AchievementsId,
+                        principalTable: "Achievements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -249,39 +275,39 @@ namespace AdminPanel.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Pictures",
+                name: "NewsPictures",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NewsId = table.Column<int>(type: "int", nullable: true),
+                    NewsId = table.Column<int>(type: "int", nullable: false),
                     Path = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    AchievementsId = table.Column<int>(type: "int", nullable: true),
                     TeachersId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                    table.PrimaryKey("PK_NewsPictures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_Achievements_AchievementsId",
-                        column: x => x.AchievementsId,
-                        principalTable: "Achievements",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Pictures_News_NewsId",
+                        name: "FK_NewsPictures_News_NewsId",
                         column: x => x.NewsId,
                         principalTable: "News",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pictures_Teachers_TeachersId",
+                        name: "FK_NewsPictures_Teachers_TeachersId",
                         column: x => x.TeachersId,
                         principalTable: "Teachers",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AchievementsPictures_AchievementsId",
+                table: "AchievementsPictures",
+                column: "AchievementsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,23 +347,21 @@ namespace AdminPanel.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pictures_AchievementsId",
-                table: "Pictures",
-                column: "AchievementsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pictures_NewsId",
-                table: "Pictures",
+                name: "IX_NewsPictures_NewsId",
+                table: "NewsPictures",
                 column: "NewsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pictures_TeachersId",
-                table: "Pictures",
+                name: "IX_NewsPictures_TeachersId",
+                table: "NewsPictures",
                 column: "TeachersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AchievementsPictures");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -354,16 +378,16 @@ namespace AdminPanel.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Pictures");
+                name: "NewsPictures");
+
+            migrationBuilder.DropTable(
+                name: "Achievements");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Achievements");
 
             migrationBuilder.DropTable(
                 name: "News");
