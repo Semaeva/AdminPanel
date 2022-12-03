@@ -22,7 +22,7 @@ namespace AdminPanel.Controllers
             return View(newsList);
         }
 
-       
+       //test
         public async Task<IActionResult> Create()
         {
             return View();
