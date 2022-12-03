@@ -7,7 +7,7 @@
         public string? Description { get; set; }
 
         public ICollection<Pictures> Pictures { get; set; }//обратная связь однин-ко-многим
-
+        //test
         public News()
         {
             Pictures = new List<Pictures>();
