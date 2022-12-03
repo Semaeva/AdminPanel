@@ -9,5 +9,6 @@ namespace AdminPanel.Interfaces
         public Task<IActionResult> Details(string id);
         public Task<IActionResult> Delete(int id);
         public Task<IActionResult> Edit(int id);
+     
     }
 }

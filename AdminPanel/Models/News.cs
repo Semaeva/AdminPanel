@@ -6,7 +6,6 @@
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? MainPicturesPath { get; set; }
-
         public ICollection<NewsPictures> Pictures { get; set; }//обратная связь однин-ко-многим
 
         public News()
