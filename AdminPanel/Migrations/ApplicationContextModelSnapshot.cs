@@ -45,6 +45,9 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("MainPicturesPath")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
@@ -53,7 +56,7 @@ namespace AdminPanel.Migrations
                     b.ToTable("News");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Pictures", b =>
+            modelBuilder.Entity("AdminPanel.Models.NewsPictures", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,9 +300,9 @@ namespace AdminPanel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Pictures", b =>
+            modelBuilder.Entity("AdminPanel.Models.NewsPictures", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Achievements", "Achievements")
+                    b.HasOne("AdminPanel.Models.Achievements", null)
                         .WithMany("Pictures")
                         .HasForeignKey("AchievementsId");
 
@@ -307,15 +310,11 @@ namespace AdminPanel.Migrations
                         .WithMany("Pictures")
                         .HasForeignKey("NewsId");
 
-                    b.HasOne("AdminPanel.Models.Teachers", "Teachers")
+                    b.HasOne("AdminPanel.Models.Teachers", null)
                         .WithMany("Pictures")
                         .HasForeignKey("TeachersId");
 
-                    b.Navigation("Achievements");
-
                     b.Navigation("News");
-
-                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
