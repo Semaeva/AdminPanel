@@ -1,33 +1,32 @@
-﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminPanel.Controllers
 {
-    public class PicturesController : Controller , ICRUDController
+    public class PicturesController : Controller
     {
-        public Task<IActionResult> Delete(int id)
+        ApplicationContext context;
+        public PicturesController(ApplicationContext context)
         {
-            throw new NotImplementedException();
-        }
+            this.context = context; 
 
-        public Task<IActionResult> Details(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IActionResult> Edit(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public IActionResult Index()
         {
             return View();
         }
-
-        Task<IActionResult> ICRUDController.Index()
+        
+        public async Task<IActionResult> SetMainPicture(int id, string path)
         {
-            throw new NotImplementedException();
+            var result = context.Achievements.SingleOrDefault((p => p.Id == id));
+            if (result != null)
+            {
+                result.MainPicturePath = path;
+                await context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+
         }
     }
 }
