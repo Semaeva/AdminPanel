@@ -1,6 +1,6 @@
 ﻿namespace AdminPanel.Models
 {
-    public class Pictures
+    public class NewsPictures
     {
         public int Id { get; set; }
         public string? Name { get; set; }

@@ -9,7 +9,7 @@ namespace AdminPanel.Models
         //в БД появится таблица Users после миграции.
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<News> News { get; set; } = null!;
-        public DbSet<Pictures> Pictures { get; set; } 
+        public DbSet<NewsPictures> Pictures { get; set; } 
         public DbSet<Teachers> Teachers { get; set; } 
         public DbSet<Achievements> Achievements { get; set; } 
 

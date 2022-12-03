@@ -6,11 +6,11 @@
         public string? Name { get; set; }
         public string? Description { get; set; }
 
-        public ICollection<Pictures> Pictures { get; set; }//обратная связь однин-ко-многим
+        public ICollection<NewsPictures> Pictures { get; set; }//обратная связь однин-ко-многим
 
         public News()
         {
-            Pictures = new List<Pictures>();
+            Pictures = new List<NewsPictures>();
         }
 
     }
