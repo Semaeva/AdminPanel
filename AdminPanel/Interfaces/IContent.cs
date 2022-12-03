@@ -8,7 +8,7 @@ namespace AdminPanel.Interfaces
         public string? Name { get; set; }
 
         public string? Description { get; set; }
-        public ICollection<Pictures>? Pictures { get; set; }
+        public ICollection<NewsPictures>? Pictures { get; set; }
 
     }
 }
