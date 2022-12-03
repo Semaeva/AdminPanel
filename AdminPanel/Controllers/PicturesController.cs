@@ -26,7 +26,7 @@ namespace AdminPanel.Controllers
                 await context.SaveChangesAsync();
             }
             return RedirectToAction("Index");
-
+            //t
         }
     }
 }
