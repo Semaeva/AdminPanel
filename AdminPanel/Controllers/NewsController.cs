@@ -1,4 +1,5 @@
 ﻿using AdminPanel.Models;
+using AdminPanel.Models.PicturesModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,12 +28,14 @@ namespace AdminPanel.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Create(string newsName, string newsDescription, IFormFileCollection uploadedFiles)
+        public async Task<IActionResult> Create(string newsName, string descriptionName, IFormFileCollection uploadedFiles)
         {
-            var news = new News {  Name = newsName, Description = newsDescription };
+            var news = new News {  Name = newsName, Description = descriptionName };
             await _context.News.AddAsync(news);
             _context.SaveChanges();
+            /*NewsPictures pic;*/
             if(uploadedFiles!= null)
             {
                 foreach (var uploadedFile in uploadedFiles)
@@ -44,6 +47,14 @@ namespace AdminPanel.Controllers
                     }
                     NewsPictures pic = new NewsPictures() { Name = uploadedFile.FileName, Path = path, News = news };
                     await _context.NewsPictures.AddAsync(pic);
+                    await _context.SaveChangesAsync();
+                }
+                //news.MainPicturePath = _context.NewsPictures.Last().Path;
+                var res = _context.News.SingleOrDefault(x => x.Id == news.Id);
+                if (res != null)
+                {
+                    var lastRecord = _context.NewsPictures.OrderByDescending(p => p.Path).FirstOrDefault().Name;
+                    res.MainPicturePath = lastRecord ;
                     await _context.SaveChangesAsync();
                 }
             }

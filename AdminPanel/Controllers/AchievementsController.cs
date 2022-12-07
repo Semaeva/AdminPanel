@@ -37,9 +37,9 @@ namespace AdminPanel.Controllers
             return RedirectToAction("AllPictures");
         }
 
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            var achievements = await _context.Achievements.Where(x=>x.Id.Equals(id)).ToListAsync();
+            var achievements = await _context.Achievements.Where(x=>x.Id==id).ToListAsync();
             return View(achievements);
         }
 
