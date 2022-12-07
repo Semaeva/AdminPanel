@@ -39,7 +39,8 @@ namespace AdminPanel.Controllers
                 {
                    result.Description = model.Description;
                    result.Name = model.Name;
-                   result.TeachersPictures = model.TeachersPictures;
+                   result.PathImage = model.PathImage;
+                   result.NameImage = model.NameImage;
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Edit", new {id = model.Id});

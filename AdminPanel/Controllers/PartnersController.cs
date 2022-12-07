@@ -1,33 +1,57 @@
 ﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Controllers
 {
     public class PartnersController : Controller, ICRUDController
     {
-        public Task<IActionResult> Delete(int id)
+        ApplicationContext _context;
+        public PartnersController(ApplicationContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Partners.FirstOrDefaultAsync(x => x.Id == id);
+            if (result != null)
+            {
+                _context.Remove(result);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Details(int id) => View(await _context.Partners.FirstOrDefaultAsync(x => x.Id == id));
+
+
+        public async Task<IActionResult> Edit(int id) => View(await _context.Partners.FirstOrDefaultAsync(x => x.Id == id));
+
+        [HttpPost]
+       
+        public async Task<IActionResult> Edit(Partners model)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                var result = await _context.Partners.SingleOrDefaultAsync(x => x.Id == model.Id);
+                if (result != null)
+                {
+                    result.Description = model.Description;
+                    result.Name = model.Name;
+                    result.PathImage = model.PathImage;
+                    result.NameImage = model.NameImage;
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Edit", new { id = model.Id });
+            }
+            return View(model);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public async Task<IActionResult> Index()=> View(_context.Partners.ToListAsync());
+=
 
-        Task<IActionResult> ICRUDController.Index()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
