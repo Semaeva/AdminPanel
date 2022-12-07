@@ -11,7 +11,6 @@ namespace AdminPanel.Controllers
         public ManagersController(ApplicationContext context)
         {
             _context = context;
-            //_managers = _context.Managers.ToList();
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -43,7 +42,7 @@ namespace AdminPanel.Controllers
                 record.NameImage = managers.NameImage;
                 record.PathImage = managers.PathImage;               
                 try
-                {
+                { 
                     await _context.SaveChangesAsync();
                 }
                 catch

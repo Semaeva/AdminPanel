@@ -1,48 +1,53 @@
 ﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Controllers
 {
-    public class TeachersController : Controller, ICRUDController, IPictiresCRUD
+    public class TeachersController : Controller, ICRUDController
     {
-        public Task<IActionResult> AllPictures()
+        ApplicationContext _context;
+        public TeachersController(ApplicationContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IActionResult> Delete(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = _context.Teachers.FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                _context.Teachers.Remove(result);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> DeletePicture(int id)
+        public async Task<IActionResult> Details(int id) => View(await _context.Teachers.FirstOrDefaultAsync(x => x.Id == id));
+
+        public async Task<IActionResult> Edit(int id) => View(await _context.Teachers.FirstOrDefaultAsync(x => x.Id == id));
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Teachers model)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                var result = await _context.Teachers.SingleOrDefaultAsync(x => x.Id == model.Id);
+                if (result != null)
+                {
+                   result.Description = model.Description;
+                   result.Name = model.Name;
+                   result.TeachersPictures = model.TeachersPictures;
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Edit", new {id = model.Id});
+            }
+            return View(model);
         }
 
-        public Task<IActionResult> Details(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IActionResult> Edit(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public Task<IActionResult> SetMainPicture(int id, string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IActionResult> ICRUDController.Index()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IActionResult> Index() => View(await _context.Teachers.ToListAsync());
     }
+
 }
