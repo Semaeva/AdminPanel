@@ -10,7 +10,5 @@ namespace AdminPanel.Models
         public string? Description { get; set; }
         public string? PathImage { get;set; }
         public string? NameImage { get; set; }
-
-        //public ICollection<NewsPictures>? Pictures { get; set; }
     }
 }

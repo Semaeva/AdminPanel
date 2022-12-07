@@ -15,6 +15,7 @@ namespace AdminPanel.Models
         public DbSet<Teachers> Teachers { get; set; } 
         public DbSet<Achievements> Achievements { get; set; } 
         public DbSet<Managers> Managers { get; set; } 
+        public DbSet<Partners> Partners { get; set; } 
 
 
         //созаем конструктор ApplicationContext, чтоб можно было инициализировать объекты класса AppliCationContext в других

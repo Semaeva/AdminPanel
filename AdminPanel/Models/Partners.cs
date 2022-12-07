@@ -1,9 +1,8 @@
 ﻿using AdminPanel.Interfaces;
-using AdminPanel.Models.PicturesModel;
 
 namespace AdminPanel.Models
 {
-    public class Teachers : IContent
+    public class Partners : IContent
     {
         public int Id { get; set; }
         public string? Name { get; set; }
