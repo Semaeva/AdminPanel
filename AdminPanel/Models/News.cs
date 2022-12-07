@@ -1,4 +1,6 @@
-﻿namespace AdminPanel.Models
+﻿using AdminPanel.Models.PicturesModel;
+
+namespace AdminPanel.Models
 {
     public class News
     {
