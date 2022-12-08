@@ -8,9 +8,12 @@ namespace AdminPanel.Controllers
     public class ManagersController : Controller, ICRUDController
     {
         ApplicationContext _context;
-        public ManagersController(ApplicationContext context)
+        IWebHostEnvironment _environment;
+
+        public ManagersController(ApplicationContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -58,6 +61,24 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Managers.ToListAsync());
+        }
+
+        public IActionResult Create() => View();
+
+        public async Task<IActionResult> Create(string newsName, string descriptionName, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                var path = "/pictures/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                Partners par = new Partners() { Name = uploadedFile.FileName, PathImage = path, NameImage = uploadedFile.FileName, Description = descriptionName };
+                await _context.Partners.AddAsync(par);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
     }

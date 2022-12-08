@@ -1,5 +1,6 @@
 ﻿using AdminPanel.Interfaces;
 using AdminPanel.Models;
+using AdminPanel.Models.PicturesModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,30 @@ namespace AdminPanel.Controllers
     public class PartnersController : Controller, ICRUDController
     {
         ApplicationContext _context;
-        public PartnersController(ApplicationContext context)
+        IWebHostEnvironment _environment;
+
+        public PartnersController(ApplicationContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
+        }
+
+        public IActionResult Create() => View();
+
+        public async Task<IActionResult> Create(string newsName, string descriptionName, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                var path = "/pictures/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                Partners par = new Partners() { Name = uploadedFile.FileName, PathImage = path, NameImage = uploadedFile.FileName, Description = descriptionName   };
+                await _context.Partners.AddAsync(par);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
