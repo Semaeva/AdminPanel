@@ -53,8 +53,8 @@ namespace AdminPanel.Controllers
                 var res = _context.News.SingleOrDefault(x => x.Id == news.Id);
                 if (res != null)
                 {
-                    var lastRecord = _context.NewsPictures.OrderByDescending(p => p.Path).FirstOrDefault().Name;
-                    res.MainPicturePath = lastRecord ;
+                    var lastRecord = await _context.NewsPictures.OrderByDescending(p => p.Path).FirstOrDefaultAsync()   ;
+                    res.MainPicturePath = lastRecord?.Path ;
                     await _context.SaveChangesAsync();
                 }
             }

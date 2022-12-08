@@ -8,9 +8,12 @@ namespace AdminPanel.Controllers
     public class TeachersController : Controller, ICRUDController
     {
         ApplicationContext _context;
-        public TeachersController(ApplicationContext context)
+        IWebHostEnvironment _environment;
+
+        public TeachersController(ApplicationContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         [HttpPost]
@@ -49,6 +52,24 @@ namespace AdminPanel.Controllers
         }
 
         public async Task<IActionResult> Index() => View(await _context.Teachers.ToListAsync());
+
+        public IActionResult Create() => View();
+
+        public async Task<IActionResult> Create(string newsName, string descriptionName, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                var path = "/pictures/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                Partners par = new Partners() { Name = uploadedFile.FileName, PathImage = path, NameImage = uploadedFile.FileName, Description = descriptionName };
+                await _context.Partners.AddAsync(par);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
     }
 
 }
