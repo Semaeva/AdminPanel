@@ -82,6 +82,29 @@ namespace AdminPanel.Migrations
                     b.ToTable("News");
                 });
 
+            modelBuilder.Entity("AdminPanel.Models.Partners", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PathImage")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Partners");
+                });
+
             modelBuilder.Entity("AdminPanel.Models.PicturesModel.AchievementsPictures", b =>
                 {
                     b.Property<int>("Id")
@@ -126,28 +149,6 @@ namespace AdminPanel.Migrations
                     b.ToTable("NewsPictures");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.PicturesModel.TeachersPicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("TeachersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeachersId");
-
-                    b.ToTable("TeachersPicture");
-                });
-
             modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
                 {
                     b.Property<int>("Id")
@@ -158,6 +159,12 @@ namespace AdminPanel.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PathImage")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -382,13 +389,6 @@ namespace AdminPanel.Migrations
                     b.Navigation("News");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.PicturesModel.TeachersPicture", b =>
-                {
-                    b.HasOne("AdminPanel.Models.Teachers", null)
-                        .WithMany("TeachersPictures")
-                        .HasForeignKey("TeachersId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -448,11 +448,6 @@ namespace AdminPanel.Migrations
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
                     b.Navigation("NewsPictures");
-                });
-
-            modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
-                {
-                    b.Navigation("TeachersPictures");
                 });
 #pragma warning restore 612, 618
         }

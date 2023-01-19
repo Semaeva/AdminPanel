@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221203115231_AddedTeachersModel")]
-    partial class AddedTeachersModel
+    [Migration("20230119093241_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,29 @@ namespace AdminPanel.Migrations
                     b.ToTable("Achievements");
                 });
 
+            modelBuilder.Entity("AdminPanel.Models.Managers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PathImage")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
                     b.Property<int>("Id")
@@ -59,6 +82,29 @@ namespace AdminPanel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("News");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Partners", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PathImage")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Partners");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.PicturesModel.AchievementsPictures", b =>
@@ -105,28 +151,6 @@ namespace AdminPanel.Migrations
                     b.ToTable("NewsPictures");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.PicturesModel.TeachersPicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("TeachersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeachersId");
-
-                    b.ToTable("TeachersPicture");
-                });
-
             modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
                 {
                     b.Property<int>("Id")
@@ -137,6 +161,12 @@ namespace AdminPanel.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PathImage")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -361,13 +391,6 @@ namespace AdminPanel.Migrations
                     b.Navigation("News");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.PicturesModel.TeachersPicture", b =>
-                {
-                    b.HasOne("AdminPanel.Models.Teachers", null)
-                        .WithMany("TeachersPictures")
-                        .HasForeignKey("TeachersId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -427,11 +450,6 @@ namespace AdminPanel.Migrations
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
                     b.Navigation("NewsPictures");
-                });
-
-            modelBuilder.Entity("AdminPanel.Models.Teachers", b =>
-                {
-                    b.Navigation("TeachersPictures");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@
 
 namespace AdminPanel.Migrations
 {
-    public partial class UpdateManagersModel : Migration
+    public partial class Test3310 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

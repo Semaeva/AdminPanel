@@ -72,7 +72,7 @@ namespace AdminPanel.Controllers
         }
 
         public async Task<IActionResult> Index()=> View(_context.Partners.ToListAsync());
-=
+
 
 
     }
