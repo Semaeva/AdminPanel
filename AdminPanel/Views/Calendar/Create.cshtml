@@ -1,0 +1,110 @@
+﻿
+@model List<Calendar>
+
+<head>
+  
+    <meta charset='utf-8' />
+    <link href='~/lib/main.css' rel='stylesheet' />
+
+
+    <script>
+        function CalendarDays(){ 
+       
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                selectable: true,
+               
+                dateClick: function (info) {
+                    var ev = $("#dateEvent").val(info.dateStr);
+                    var name = $("#nameEvent").val();
+                },
+                select: function (info) {
+                },
+                events: [ 
+                    {
+                        title: 'Event2',
+                        start: '2022-12-05'
+                    }
+                ],
+                eventColor: '#378006',
+                     
+            });
+            calendar.render();
+
+    </script>
+   
+</head>
+<body>
+    
+    <div class="container mt-2">
+        <form asp-controller="Calendar" asp-action="Create" method="post">
+            Дата события: <input type="text" name="dateEvent"
+                                 id="dateEvent"><br><br>
+
+            Наименование: <input type="text" name="nameEvent"
+                                 id="nameEvent"><br><br>
+            <input type="submit" />
+
+        </form>
+    </div>
+
+    <script src='~/lib/main.js'></script>
+
+
+    <div id='calendar'></div>
+
+    <div>   
+    @foreach (var item in Model)
+    {
+        @foreach (var i in item.Events)
+        {
+            <p class="all_holiday" hidden>@i.Day</p>
+            <p class="full_date" hidden>@i.FullDate</p>
+            <p class="name_holiday">@i.Name</p>
+        }
+    }
+    </div>
+     @section scripts {
+        <script>
+            document.addEventListener('click', function (e) {
+                document.getElementById('myDIV').value = '';
+
+                names = ''
+                e = e || window.event;
+                var target = e.target;
+                text = target.textContent || target.innerText;
+                names = e.target.querySelector('.fc-event-title');
+                const para = document.createElement("p");
+                para.setAttribute("id", "para");
+            }, false);
+
+
+            $(document).on('shown.bs.modal', '#myModal', function (event) {
+                const para = document.createElement("p");
+                para.setAttribute("id", "para");
+                if (names) {
+                    para.innerText = names.innerText;
+                    document.getElementById("myDIV").appendChild(para);
+                    console.log(para.innerText)
+                }
+                else {
+                    var input = document.createElement("input");
+                    input.setAttribute('type', 'text');
+                    var parent = document.getElementById("myDIV");
+                    parent.appendChild(input);
+                }
+            });
+
+
+            function removeChildEvent() {
+                para = document.getElementById("myDIV")
+                para.innerText = "";
+            }
+        </script>
+    }
+
+</body>
+
