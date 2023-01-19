@@ -1,0 +1,62 @@
+﻿@*
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form asp-action="Create" asp-controller="Calendar" method="post">
+                        <label for="dateEvent">Дата события</label>
+                        <input type="text" name="dateEvent" id="dateEvent" readonly />
+                        <span>Наименование события</span>
+                        <input type="text" name="name" id="nameEvent" />
+
+                        <div id="myDIV"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='calendar'></div>
+
+
+
+    <div>
+        @foreach (var item in Model)
+        {
+            @foreach (var i in item.Events)
+            {
+                <p class="days" hidden>@i.Day</p>
+                <p class="ids">@i.Id</p>
+                <p class="full_date" hidden>@i.FullDate</p>
+                <p class="name_event" hidden>@i.Name</p>
+            }
+        }
+    </div>
+
+
+    @section scripts {
+        <script>
+
+            function myFunc() {
+                const para = document.createElement("p");
+                para.setAttribute("id", "para");
+
+                const btn = document.createElement("button");
+                btn.innerHTML = 'send';
+                btn.type = "submit";
+                btn.setAttribute("class", "btn btn-danger");
+
+                document.getElementById('myDIV').appendChild(btn);
+            }
+        </script>
+    }*@

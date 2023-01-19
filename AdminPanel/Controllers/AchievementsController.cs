@@ -65,7 +65,7 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Create() => View();
+        public IActionResult Create() => View(); 
         public async Task<IActionResult> Create(string newsName, string descriptionName, IFormFileCollection uploadedFiles)
         {
             var achievements = new Achievements { Name = newsName, Description = descriptionName };

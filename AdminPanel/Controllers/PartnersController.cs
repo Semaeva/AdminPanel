@@ -71,9 +71,7 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Index()=> View(_context.Partners.ToListAsync());
-=
-
+        public async Task<IActionResult> Index()=> View(await _context.Partners.ToListAsync());
 
     }
 }
