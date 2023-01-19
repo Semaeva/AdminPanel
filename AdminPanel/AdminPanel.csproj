@@ -25,4 +25,8 @@
     <Folder Include="wwwroot\pictures\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\scripts\calendar_.js" />
+  </ItemGroup>
+
 </Project>

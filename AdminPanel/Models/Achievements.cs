@@ -1,4 +1,5 @@
 ﻿using AdminPanel.Interfaces;
+using AdminPanel.Models.PicturesModel;
 
 namespace AdminPanel.Models
 {

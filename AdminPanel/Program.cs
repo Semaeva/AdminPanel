@@ -6,17 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//получаем строку подключения из appsetiings.json
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+using (var con = builder.Configuration)
+{
+    //получаем строку подключения из appsetiings.json
+    string connectionString = con.GetConnectionString("DefaultConnection");
 
-//Добавляем сервис для подлючения к MySQL при помощи строки подключения
-//в качестве типа для AddDbContext используем ApplicationContext
-builder.Services.AddDbContext<ApplicationContext>(options => 
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-//подключаем identity
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().
-    AddDefaultTokenProviders();
+    //Добавляем сервис для подлючения к MySQL при помощи строки подключения
+    //в качестве типа для AddDbContext используем ApplicationContext
+    builder.Services.AddDbContext<ApplicationContext>(options =>
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+    //подключаем identity
+    builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().
+        AddDefaultTokenProviders();
+}
 
 
 var app = builder.Build();

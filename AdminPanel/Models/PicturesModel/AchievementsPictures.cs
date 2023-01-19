@@ -1,6 +1,6 @@
 ﻿using AdminPanel.Interfaces;
 
-namespace AdminPanel.Models
+namespace AdminPanel.Models.PicturesModel
 {
     public class AchievementsPictures : IPictures
     {

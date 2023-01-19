@@ -9,7 +9,7 @@
         <tr>
             <td>@news.Name</td>
                 <td>@news.Description</td>
-                @foreach(var pic in news.Pictures){
+                @foreach(var pic in news.NewsPictures){
               <td>@pic.Name</td>
                           <td><img rec="@pic.Path"></td>
                 }
