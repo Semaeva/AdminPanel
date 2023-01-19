@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AdminPanel.Models.PicturesModel;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Models
@@ -9,8 +10,12 @@ namespace AdminPanel.Models
         //в БД появится таблица Users после миграции.
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<News> News { get; set; } = null!;
-        public DbSet<Pictures> Pictures { get; set; } 
+        public DbSet<NewsPictures> NewsPictures { get; set; } 
+        public DbSet<AchievementsPictures> AchievementsPictures { get; set; } 
         public DbSet<Teachers> Teachers { get; set; } 
+        public DbSet<Achievements> Achievements { get; set; } 
+        public DbSet<Managers> Managers { get; set; } 
+        public DbSet<Partners> Partners { get; set; } 
 
 
         //созаем конструктор ApplicationContext, чтоб можно было инициализировать объекты класса AppliCationContext в других
