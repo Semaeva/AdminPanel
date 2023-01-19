@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230119093609_Test3310")]
-    partial class Test3310
+    [Migration("20230119100654_newDb")]
+    partial class newDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,48 @@ namespace AdminPanel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Achievements");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Calendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Month")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Calendars");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Events", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CalendarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Day")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FullDate")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CalendarId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Managers", b =>
@@ -369,6 +411,15 @@ namespace AdminPanel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AdminPanel.Models.Events", b =>
+                {
+                    b.HasOne("AdminPanel.Models.Calendar", "Calendar")
+                        .WithMany("Events")
+                        .HasForeignKey("CalendarId");
+
+                    b.Navigation("Calendar");
+                });
+
             modelBuilder.Entity("AdminPanel.Models.PicturesModel.AchievementsPictures", b =>
                 {
                     b.HasOne("AdminPanel.Models.Achievements", "Achievements")
@@ -445,6 +496,11 @@ namespace AdminPanel.Migrations
             modelBuilder.Entity("AdminPanel.Models.Achievements", b =>
                 {
                     b.Navigation("AchievementsPictures");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Calendar", b =>
+                {
+                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>

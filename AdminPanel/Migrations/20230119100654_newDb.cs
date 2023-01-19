@@ -4,7 +4,7 @@
 
 namespace AdminPanel.Migrations
 {
-    public partial class Test3310 : Migration
+    public partial class newDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
