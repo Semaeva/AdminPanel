@@ -1,0 +1,23 @@
+﻿@using AdminPanel.Models;
+@model Tuple<List<News>, List<Managers>>;
+
+@if (Model != null){
+    <h2>News</h2>
+@foreach(var news in Model.Item1)
+{
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+
+        <tr>
+            <td>@news.Name</td>
+            <td>@news.Description</td>
+        </tr>
+
+    </table>
+}
+
+}
+

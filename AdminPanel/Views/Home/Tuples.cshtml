@@ -1,0 +1,32 @@
+﻿@using AdminPanel.Models
+@model Tuple<List<News>, List<Managers>>
+
+@{
+    Layout = null;
+}
+
+<link href="~/css/my/StyleSheet.css" rel="stylesheet"/>
+    @if (Model != null){
+            <h2>News</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 70px;">Id</th>
+                    <th>Name</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var cate in Model.Item1)
+            {
+                        <tr>
+                            <td>@cate.Id</td>
+                            <td>@cate.Name</td>
+                            <td>@cate.Description</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+ 

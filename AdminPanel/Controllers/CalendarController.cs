@@ -34,9 +34,16 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> Delete(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var record = _context.Events.Where(x => x.Id == id).FirstOrDefault();
+            if (record != null)
+            {
+                _context.Events.Remove(record);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
         public Task<IActionResult> Details(int id)

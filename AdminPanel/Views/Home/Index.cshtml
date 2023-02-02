@@ -1,7 +1,6 @@
-﻿@if(User.Identity.IsAuthenticated){
-    <p>@User.Identity.Name</p>
-    <form method="post" asp-controller="Account" asp-action="Logout">
-        <input type="submit" value="Выход">
-    </form>
+﻿@using AdminPanel.Models.CollectionData;
+@model CollectionDataModel
 
+@foreach(var i in Model.News){
+    <p>@i.Name</p>
 }

@@ -61,7 +61,7 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeletePicture(int id)
         {
             var record = _context.NewsPictures.Where(x => x.Id == id).FirstOrDefault();
@@ -74,7 +74,7 @@ namespace AdminPanel.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> SetMainPicture(int id, string path)
         {
             var result = _context.Achievements.SingleOrDefault((p => p.Id == id));

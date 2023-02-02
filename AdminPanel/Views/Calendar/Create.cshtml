@@ -75,6 +75,7 @@
                 names = ''
                 e = e || window.event;
                 var target = e.target;
+                console.log(target)
                 text = target.textContent || target.innerText;
                 names = e.target.querySelector('.fc-event-title');
                 const para = document.createElement("p");

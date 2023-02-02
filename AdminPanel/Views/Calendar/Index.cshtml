@@ -18,7 +18,6 @@
             const list_event_ids = $('.ids');
 
             function GetMainData(list_to_push, list_from) {
-
                 for (var i = 0; i < list_from.length; i++) {
                     list_to_push.push(list_from[i].innerText);
                 }
@@ -30,11 +29,7 @@
             var list3 = GetMainData(list_ids, list_event_ids);
 
             var dict = list2.map((title, i, id) => ({ title, start: list1[i], id: list3[i] }));
-            console.log(dict);
-
-
             var calendarEl = document.getElementById('calendar');
-
             var calendar = new FullCalendar.Calendar(calendarEl, {
 
                 initialView: 'dayGridMonth',
@@ -43,23 +38,57 @@
                 events: dict,
                 eventColor: '#378006',
                 eventClick: function (info) {
-
-                        
+                    console.log(info.event.title);
+                    RemoveEvent(info.event.id, info.event.title);
+                    //RemoveEvent(info.event.id,  info.event.title);      
                 },
                 dateClick: function (info) {
-                    var dateEvents = $("#dateEvent").val(info.dateStr);
-                    var nameEvents = $("#nameEvent").val();
-                    var myModal = new bootstrap.Modal(document.getElementById("myModal"));
-                    myModal.show();
-                    /*myFunc*/
-
+                    SetTitle(info);    
                 },
 
             });
 
             calendar.render();
 
+            function SetTitle(info){
+                var dateEvents = $("#dateEvent").val(info.dateStr);
+                var nameEvents = $("#nameEvent").val();
+                var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+                myModal.show();
 
+                const createEvent = document.getElementById('createEvent');
+                var inputDate = document.createElement("input");
+                inputDate.type = "text";
+                //inputDate.name = info.dateStr;
+                inputDate.name = 'dateEvent';
+                inputDate.value = info.dateStr;
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "nameEvent";
+                createEvent.appendChild(input)
+                createEvent.appendChild(inputDate)
+            }
+
+            function RemoveEvent(id, title){
+                var myModal = new bootstrap.Modal(document.getElementById("removeModal"));
+                myModal.show();
+
+                const removeEvent = document.getElementById('removeEvent');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.value = title;
+
+                var hiddenId = document.createElement('input');
+                hiddenId.name = 'id';
+                hiddenId.type = 'text';
+                hiddenId.value= id;
+                hiddenId.hidden = true;
+
+                removeEvent.appendChild(input);
+                removeEvent.appendChild(hiddenId);
+
+            }
 
             function getMainData(list_to_push, list_from) {
                 for (var i = 0; i < list_from.length; i++) {
@@ -67,7 +96,14 @@
                 }
                 return list_to_push;
             }
-        });
+        }); 
+
+
+ 
+
+
+    
+
     </script>
 </head>
 <body>
@@ -81,15 +117,57 @@
                     <h1 class="modal-title fs-5" id="myModalLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
+                <form method="post" asp-action="Create" asp-controller="Calendar">
+                    <div class="modal-body">
+                       <div id="createEvent"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+
+
+    <div class="modal fade" id="removeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="removeModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                @using (Html.BeginForm("Delete", "Calendar", FormMethod.Post))
+                {
+                    <div class="modal-body">
+                        <div id="removeEvent"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Удалить</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+   
+
+
+    <div>
+        @foreach (var item in Model)
+        {
+            @foreach (var i in item.Events)
+            {
+                <p class="days" hidden>@i.Day</p>
+                <p class="ids" hidden>@i.Id</p>
+                <p class="full_date" hidden>@i.FullDate</p>
+                <p class="name_event" hidden>@i.Name</p>
+            }
+        }
     </div>
 
     <script src='~/lib/main.js'></script>
